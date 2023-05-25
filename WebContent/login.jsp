@@ -9,14 +9,14 @@
 <div id='container'>
   <div class='signup'>
      
-      <form action="Login" method="post">
+      <form action="loginAction.jsp" method="post">
       
       	<input type="email" placeholder="Enter email" name="email">
       	<input type="password" placeholder="Enter password" name="password">
       	<input type="submit" value="Login">
       </form>
       <h2><a href="signup.jsp">SignUp</a></h2>
-       <h2><a href="">Forgot Password?</a></h2>
+       <h2><a href="forgotPassword.jsp">Forgot Password?</a></h2>
   </div>
   <div class='whysignLogin'>
   
