@@ -45,7 +45,7 @@ h3
 <% } %>
 
 
-<h3 class="alert">Password change successfully!</h3>
+
 
 <table>
         <thead>

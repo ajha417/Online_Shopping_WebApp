@@ -54,8 +54,12 @@
         </tbody>
       </table>
       	
+      	<%
+      	 if(z==0)
+      	 {
+      	%>
 	<h1 style="color:white; text-align: center;">Nothing to show</h1>
-	
+	<%} %>
       <br>
       <br>
       <br>
