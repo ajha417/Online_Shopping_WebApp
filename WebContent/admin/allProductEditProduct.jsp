@@ -1,4 +1,7 @@
-
+<%@page import="project.ConnectionDao"  %>
+<%@page import="java.sql.*" %>
+<%@include file="adminHeader.jsp" %>
+<%@include file="../footer.jsp" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -15,10 +18,22 @@ h3
 <body>
 <div style="color: white; text-align: center; font-size: 30px;">All Products & Edit Products <i class='fab fa-elementor'></i></div>
 
-<h3 class="alert">Product Successfully Updated!</h3>
 
-<h3 class="alert">Some thing went wrong! Try again!</h3>
+<%
 
+	String msg = request.getParameter("msg");
+	if("success".equals(msg))
+	{
+	%>
+		<h3 class="alert">Product Updated Successfully!</h3>
+<% } %>
+
+<%
+	if("error".equals(msg))
+	{
+	%>
+		<h3 class="alert">Some thing went wrong! Try Again!</h3>
+<% } %>
 <table>
         <thead>
           <tr>
@@ -33,14 +48,31 @@ h3
         <tbody>
        
           <tr>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td><i class="fa fa-inr"></i> </i></td>
-            <td></td>
-            <td><a href="">Edit <i class='fas fa-pen-fancy'></i></a></td>
+          <%
+        
+        	try
+	        {
+	        	Connection conn = ConnectionDao.getConnection();
+	        	Statement st = conn.createStatement();
+	        	ResultSet rs = st.executeQuery("select * from products");
+	        	while(rs.next())
+	        	{
+	        	%>
+          <tr>
+            <td scope="col"><%= rs.getString(1) %></td>
+            <td scope="col"><%= rs.getString(2) %></td>
+            <td scope="col"><%= rs.getString(3) %></td>
+            <td scope="col"><i class="fa fa-inr"></i> <%= rs.getString(4) %></td>
+            <td><%= rs.getString(5) %></td>
+            <td scope="col"><a href="editProduct.jsp?id=<%= rs.getString(1) %>">Edit <i class='fas fa-pen-fancy'></i></a></td>
           </tr>
-         
+          <% } 
+	        }
+          catch(Exception e)
+          {
+        	  out.println(e);
+          }
+          %>
         </tbody>
       </table>
       <br>

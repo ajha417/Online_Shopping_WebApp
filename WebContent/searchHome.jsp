@@ -1,4 +1,7 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<%@page import="project.ConnectionDao"  %>
+<%@page import="java.sql.*" %>
+<%@include file="header.jsp" %>
+<%@include file="footer.jsp" %>
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
@@ -17,15 +20,37 @@
           </tr>
         </thead>
         <tbody>
-
+<%
+	int z = 0;
+		try{
+		 
+			String search = request.getParameter("search");
+		
+		Connection conn = ConnectionDao.getConnection();
+		Statement st = conn.createStatement();
+		ResultSet rs = st.executeQuery("select * from products where name like '%"+search+"%' or category like '%"+search+"%' and active='yes'");
+		while(rs.next())
+		
+		{
+			
+			z = 1;
+	%>
           <tr>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td><i class="fa fa-inr"></i> </i></td>
-            <td><a href="">Add to cart <i class='fas fa-cart-plus'></i></a></td>
+            <td><%=rs.getString(1) %></td>
+            <td><%=rs.getString(2) %></td>
+            <td><%=rs.getString(3) %></td>
+            <td><i class="fa fa-inr"></i> <%=rs.getString(4) %></td>
+            <td><a href="addToCartAction.jsp?id=<%=rs.getString(1)%>">Add to cart <i class='fas fa-cart-plus'></i></a></td>
           </tr>
-         
+        
+        <%
+		}
+		}
+		catch(Exception e)
+		{
+			out.print(e);
+		}
+        %>
         </tbody>
       </table>
       	

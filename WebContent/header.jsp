@@ -9,10 +9,10 @@
     <!--Header-->
     <br>
     <div class="topnav sticky">
-    
+    		<% String email = session.getAttribute("email").toString(); %>
             <center><h2>Online shopping (BTech Days)</h2></center>
-            <h2><a href=""> <i class='fas fa-user-alt'></i></a></h2>
-            <a href="">Home<i class="fa fa-institution"></i></a>
+            <h2><a href=""> <% out.println("Welcome,"+email.substring(0, email.indexOf("@")).toUpperCase()); %> <i class='fas fa-user-alt'></i></a></h2>
+            <a href="home.jsp">Home<i class="fa fa-institution"></i></a>
             <a href="">My Cart<i class='fas fa-cart-arrow-down'></i></a>
             <a href="">My Orders  <i class='fab fa-elementor'></i></a>
             <a href="">Change Details <i class="fa fa-edit"></i></a>
@@ -22,7 +22,10 @@
             <div class="search-container">
              
                
-                <i class="fa fa-search"></i>
+             <form action="searchHome.jsp" method = "post">
+             	<input type="text" placeholder="Search item" name="search">
+             	<button type="submit"><i class="fa fa-search"></i></button>
+             </form>
              
             </div>
           </div>
