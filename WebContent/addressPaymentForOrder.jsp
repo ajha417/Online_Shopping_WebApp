@@ -1,20 +1,41 @@
-
+<%@page import="project.ConnectionDao"  %>
+<%@page import="java.sql.*" %>
+<%@include file="footer.jsp" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
 <link rel="stylesheet" href="css/addressPaymentForOrder-style.css">
 <script src='https://kit.fontawesome.com/a076d05399.js'></script>
 <title>Home</title>
-
+	<script>
+	
+		if(window.history.forward(1) != null)
+			window.history.forward(1);
+	</script>
 </head>
 <body>
 <br>
 <table>
 <thead>
-
+		<%
+		
+			String email = session.getAttribute("email").toString();
+			int total = 0;
+			int sno = 0;
+			try
+        	{
+        		Connection conn = ConnectionDao.getConnection();
+        		Statement st = conn.createStatement();
+	        	ResultSet rs  =	st.executeQuery("select sum(total) from cart where email='"+email+"' and address is NULL");
+        		while(rs.next())
+        		{
+        			total = rs.getInt(1);
+        		}
+		
+		%>
           <tr>
-          <th scope="col"><a href=""><i class='fas fa-arrow-circle-left'> Back</i></a></th>
-            <th scope="col" style="background-color: yellow;">Total: <i class="fa fa-inr"></i> </th>
+          <th scope="col"><a href="myCart.jsp"><i class='fas fa-arrow-circle-left'> Back</i></a></th>
+            <th scope="col" style="background-color: yellow;">Total: <i class="fa fa-inr"></i><% out.println(total); %> </th>
           </tr>
         </thead>
         <thead>
@@ -29,21 +50,33 @@
         </thead>
         <tbody>
         
+         <%
+      
+      	ResultSet rs1 = st.executeQuery("select * from products inner join cart on products.id = cart.product_id and cart.email='"+email+"' and cart.address is NULL");
+      	while(rs1.next())
+      	{
+       %>
+        
           <tr>
-          
-           <td></td>
-            <td></td>
-            <td></td>
-            <td><i class="fa fa-inr"></i> ></td>
-            <td> </td>
-            <td><i class="fa fa-inr"></i> </td>
+          <% sno = sno + 1; %>
+          <td><% out.println(sno); %></td>
+            <td><%=rs1.getString(2) %></td>
+            <td><%= rs1.getString(3) %></td>
+            <td><i class="fa fa-inr"></i><%= rs1.getString(4) %> </td>
+            <td> <%= rs1.getString(8) %> </td>
+            <td><i class="fa fa-inr"></i><%= rs1.getString(10) %> </td>
             </tr>
-         
+         <% } 
+         ResultSet rs2 = st.executeQuery("select * from users where email='"+email+"'");
+         while(rs2.next()){
+        	 
+         }
+         %>
         </tbody>
       </table>
       
 <hr style="width: 100%">
-
+<form action="addressPaymentForOrdersAction" method="post">
  <div class="left-div">
  <h3>Enter Address</h3>
 
@@ -88,7 +121,16 @@
 <i class='far fa-arrow-alt-circle-right'></i>
 <h3 style="color: red">*Fill form correctly</h3>
 </div>
+</form>
+<%
 
+        	}
+        	catch(Exception e)
+        	{
+        	
+        	}
+
+%>
 
       <br>
       <br>
