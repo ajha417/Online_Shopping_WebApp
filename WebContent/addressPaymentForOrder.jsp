@@ -70,64 +70,68 @@
          ResultSet rs2 = st.executeQuery("select * from users where email='"+email+"'");
          while(rs2.next()){
         	 
-         }
+         
          %>
         </tbody>
       </table>
       
 <hr style="width: 100%">
-<form action="addressPaymentForOrdersAction" method="post">
+<form action="addressPaymentForOrdersAction.jsp" method="post">
  <div class="left-div">
  <h3>Enter Address</h3>
-
+	<input class="input-style" type="text" name="address" value="<%= rs2.getString(7)%>" placeholder="Enter address" required>
  </div>
 
 <div class="right-div">
 <h3>Enter city</h3>
-
+	<input class="input-style" type="text" name="city" value="<%=rs2.getString(8)%>" placeholder="Enter city" required>
 </div> 
 
 <div class="left-div">
 <h3>Enter State</h3>
-
+	<input class="input-style" type="text" name="state" value="<%= rs2.getString(9)%>" placeholder="Enter state" required>
 </div>
 
 <div class="right-div">
 <h3>Enter country</h3>
-
+	<input class="input-style" type="text" name="country" value="<%= rs2.getString(10)%>" placeholder="Enter country" required>
 </div>
 <h3 style="color: red">*If there is no address its mean that you did not set you address!</h3>
 <h3 style="color: red">*This address will also updated to your profile</h3>
 <hr style="width: 100%">
 <div class="left-div">
 <h3>Select way of Payment</h3>
- 
+ <select class="input-style" name="paymentMethod">
+ 	<option value="Cash on Delivery(COD)">Cash On Delivery</option>
+ 	<option value="Online Payment">Online Payment</option>
+ </select>
 </div>
 
 <div class="right-div">
 <h3>Pay online on this btechdays@pay.com</h3>
-
+	<input class="input-style" type="text" name="transactionId" placeholder="Enter Transaction ID" required>
 <h3 style="color: red">*If you select online Payment then enter you transaction ID here otherwise leave this blank</h3>
 </div>
 <hr style="width: 100%">
 
 <div class="left-div">
 <h3>Mobile Number</h3>
-
+	<input class="input-style" type="text" name="mobileNumber" value="<%= rs2.getString(4)%>" placeholder="Enter Mobile Number" required>
 <h3 style="color: red">*This mobile number will also updated to your profile</h3>
 </div>
 <div class="right-div">
 <h3 style="color: red">*If you enter wrong transaction id then your order will we can cancel!</h3>
-<i class='far fa-arrow-alt-circle-right'></i>
+<button type="submit" class="button">Proceed to generate bill & save<i class='far fa-arrow-alt-circle-right'></i></button>
 <h3 style="color: red">*Fill form correctly</h3>
 </div>
 </form>
 <%
+         }
 
         	}
         	catch(Exception e)
         	{
-        	
+        		out.println(e);
         	}
 
 %>

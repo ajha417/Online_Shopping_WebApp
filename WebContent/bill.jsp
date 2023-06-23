@@ -1,4 +1,6 @@
-
+<%@page import="project.ConnectionDao"  %>
+<%@page import="java.sql.*" %>
+<%@include file="footer.jsp" %>
 <html>
 <head>
 <link rel="stylesheet" href="css/bill.css">
