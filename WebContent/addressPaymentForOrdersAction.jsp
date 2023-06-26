@@ -4,6 +4,10 @@
 <%
 
 	String email = session.getAttribute("email").toString();
+	if(email == null)
+	{
+		response.sendRedirect("login.jsp");
+	}
 	String address = request.getParameter("address");
 	String state = request.getParameter("state");
 	String city = request.getParameter("city");

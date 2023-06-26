@@ -8,26 +8,50 @@
 </head>
 <body>
 
+<%
+
+	String email = session.getAttribute("email").toString();
+	try{
+		int sno = 0;
+		int total = 0;
+		Connection conn = ConnectionDao.getConnection();
+		Statement st = conn.createStatement();
+		ResultSet rs1 = st.executeQuery("select sum(total) from cart where email='"+email+"' and status='bill'");
+		while(rs1.next())
+		{
+			total = rs1.getInt(1);
+		}
+		ResultSet rs2 = st.executeQuery("select * from users inner join cart where cart.email='"+email+"' and cart.status='bill'");
+		while(rs2.next())
+		{
+	
+	
+
+
+%>
 <h3>Online shopping Bill (BTech Days)</h3>
 <hr>
-<div class="left-div"><h3>Name:  </h3></div>
-<div class="right-div-right"><h3>Email:  </h3></div>
-<div class="right-div"><h3>Mobile Number:  </h3></div>  
+<div class="left-div"><h3>Name:  <%= rs2.getString(1) %></h3></div>
+<div class="right-div-right"><h3>Email: <% out.println(email); %> </h3></div>
+<div class="right-div"><h3>Mobile Number: <%= rs2.getString(20) %> </h3></div>  
 
-<div class="left-div"><h3>Order Date:  </h3></div>
-<div class="right-div-right"><h3>Payment Method:  </h3></div>
-<div class="right-div"><h3>Expected Delivery:  </h3></div> 
+<div class="left-div"><h3>Order Date: <%=rs2.getString(21) %> </h3></div>
+<div class="right-div-right"><h3>Payment Method: <%= rs2.getString(23) %> </h3></div>
+<div class="right-div"><h3>Expected Delivery: <%= rs2.getString(22) %> </h3></div> 
 
-<div class="left-div"><h3>Transaction Id:  </h3></div>
-<div class="right-div-right"><h3>City:  </h3></div> 
-<div class="right-div"><h3>Address:  </h3></div> 
+<div class="left-div"><h3>Transaction Id: <%= rs2.getString(24) %> </h3></div>
+<div class="right-div-right"><h3>City: <%=rs2.getString(17) %> </h3></div> 
+<div class="right-div"><h3>Address: <%= rs2.getString(16) %> </h3></div> 
 
-<div class="left-div"><h3>State:  </h3></div>
-<div class="right-div-right"><h3>Country:  </h3></div>  
+<div class="left-div"><h3>State: <%=rs2.getString(18) %> </h3></div>
+<div class="right-div-right"><h3>Country: <%= rs2.getString(19) %> </h3></div>  
 
 <hr>
 
+<%
 
+	break;}
+%>
 	
 	<br>
 	
@@ -42,21 +66,38 @@
      <th>Sub Total</th>
   </tr>
   
+  <%
+  
+  ResultSet rs = st.executeQuery("select * from cart inner join products where cart.product_id=products.id and cart.email='"+email+"' and cart.status='bill'");
+  while(rs.next())
+  {
+	  
+  
+	  sno = sno + 1;
+  %>
   <tr>
-    <td></td>
-    <td></td>
-    <td></td>
-    <td></td>
-    <td></td>
-     <td></td>
+    <td><%out.println(sno); %></td>
+    <td><%=rs.getString(17) %></td>
+    <td><%=rs.getString(18) %></td>
+    <td><%=rs.getString(19) %></td>
+    <td><%=rs.getString(3) %></td>
+     <td><%=rs.getString(5) %></td>
   </tr>
   <tr>
-
+<%} %>
 </table>
-<h3>Total: </h3>
+<h3>Total:<%out.println(total); %> </h3>
 <a href="continueShopping.jsp"><button class="button left-button">Continue Shopping</button></a>
 <a onclick="window.print();"><button class="button right-button">Print</button></a>
 <br><br><br><br>
+<%
+  
+}
 
+catch(Exception e)
+{
+	out.println(e);
+}
+%>
 </body>
 </html>
