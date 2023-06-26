@@ -11,7 +11,8 @@
 		PreparedStatement st = conn.prepareStatement("update cart set status=? where email=? and status='bill'");
 		st.setString(1, status);
 		st.setString(2,email);
-				
+		st.executeUpdate();
+		response.sendRedirect("home.jsp");
 	}
 	catch(Exception e)
 	{
