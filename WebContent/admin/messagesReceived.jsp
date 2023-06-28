@@ -1,4 +1,7 @@
-
+<%@page import="project.ConnectionDao"  %>
+<%@page import="java.sql.*" %>
+<%@include file="adminHeader.jsp" %>
+<%@include file="../footer.jsp" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -24,14 +27,33 @@ h3
           </tr>
         </thead>
         <tbody>
+       <%
        
+       	try
+       {
+       		Connection conn = ConnectionDao.getConnection();
+       		Statement st = conn.createStatement();
+       		ResultSet rs = st.executeQuery("select * from messages");
+       		while(rs.next())
+       		{
+       			
+       		
+       
+       %>
           <tr>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
+            <td><%=rs.getString(1) %></td>
+            <td><%=rs.getString(2) %></td>
+            <td><%=rs.getString(3) %></td>
+            <td><%=rs.getString(4) %></td>
           </tr>
-         
+          <% 
+         	}
+       }
+       catch(Exception e)
+       {
+    	   out.println(e);
+       }
+       %>
         </tbody>
       </table>
       <br>
