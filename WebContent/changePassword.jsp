@@ -46,7 +46,7 @@
 <h3 class="alert">Some thing went wrong! Try again!</h3>
 <% } %>
 
-<form action="" method="post">
+<form action="changePasswordAction.jsp" method="post">
 <h3>Enter Old Password</h3>
  <input class="input-style" type="password" name="oldpassword" placeholder="Enter old password" required>
   <hr>
