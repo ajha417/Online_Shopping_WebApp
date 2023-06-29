@@ -85,8 +85,8 @@
             <td><%=rs.getString(13) %></td>
             <td><%=rs.getString(14) %></td>
             <td><%=rs.getString(15) %></td>
-            <td><a href="">Cancel <i class='fas fa-window-close'></i></a></td>
-            <td><a href="">Delivered <i class='fas fa-dolly'></i></i></a></td>
+            <td><a href="cancelOrdersAction.jsp?id=<%=rs.getString(2)%>&email=<%=rs.getString(1)%>">Cancel <i class='fas fa-window-close'></i></a></td>
+            <td><a href="deliveredOrdersAction.jsp?id=<%=rs.getString(2)%>&email=<%=rs.getString(1)%>">Delivered <i class='fas fa-dolly'></i></i></a></td>
           </tr>
          <%
          
