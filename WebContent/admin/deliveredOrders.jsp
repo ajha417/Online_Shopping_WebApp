@@ -1,4 +1,7 @@
-
+<%@page import="project.ConnectionDao"  %>
+<%@page import="java.sql.*" %>
+<%@include file="adminHeader.jsp" %>
+<%@include file="../footer.jsp" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -11,12 +14,6 @@
 </head>
 <body>
 <div style="color: white; text-align: center; font-size: 30px;">Delivered Orders <i class='fas fa-dolly'></i></div>
-
-<h3 class="alert">Order Cancel Successfully!</h3>
-
-<h3 class="alert">Successfully Updated!</h3>
-
-<h3 class="alert">Some thing went wrong! Try Again!</h3>
 
 
 <table id="customers">
@@ -36,23 +33,45 @@
               <th scope="col">Status</th>
           </tr>
         
+        <%
+        
+        try
+        {
+        	
+        	Connection conn = ConnectionDao.getConnection();
+        	Statement st = conn.createStatement();
+        	ResultSet rs = st.executeQuery("select * from cart inner join products where cart.product_id=products.id and cart.orderDate is not NULL and cart.status='delivered'");
+        	while(rs.next())
+        	{
+        		
+        	
+        %>
         
           <tr>
-          <td></td>
-            <td></td>
-            <td></td>
-            <td><i class="fa fa-inr"></i>  </td>
-                <td></td>
-               <td></td>
-                <td></td>
-                 <td></td>
-             <td></td>
-              <td></td>
-               <td></td>
-               <td></td>
-               <td></td>
-              </tr>
+          	<td><%=rs.getString(10) %></td>
+            <td><%=rs.getString(17) %></td>
+            <td><%=rs.getString(3) %></td>
+            <td><i class="fa fa-inr"></i> <%=rs.getString(5) %> </td>
+            <td><%=rs.getString(6) %></td>
+            <td><%=rs.getString(7) %></td>
+            <td><%=rs.getString(8) %></td>
+            <td><%=rs.getString(9) %></td>
+            <td><%=rs.getString(11) %></td>
+            <td><%=rs.getString(12) %></td>
+            <td><%=rs.getString(13) %></td>
+            <td><%=rs.getString(14) %></td>
+            <td><%=rs.getString(15) %></td>
+           </tr>
+         <%
          
+        	}
+        }
+        catch(Exception e)
+        {
+        	out.println(e);
+        }
+        
+         %>
         </table>
       <br>
       <br>
